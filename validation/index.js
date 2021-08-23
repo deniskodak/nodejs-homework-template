@@ -1,3 +1,3 @@
-const joiContactSchema = require("./contacts");
+const { joiAddContactSchema, joiChangeContactSchema } = require("./contacts");
 
-module.exports = joiContactSchema;
+module.exports = { joiAddContactSchema, joiChangeContactSchema };

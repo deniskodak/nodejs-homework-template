@@ -14,10 +14,6 @@ const findIdx = function (array, id) {
   return index;
 };
 
-const throwError = function (id) {
-  throw new Error(`Sorry, but contact with id: ${id} does not exist `);
-};
-
 const updateJson = function (array) {
   const arrayStringed = JSON.stringify(array);
   fs.writeFile(contactsPath, arrayStringed);
@@ -26,6 +22,5 @@ const updateJson = function (array) {
 module.exports = {
   getContacts,
   findIdx,
-  throwError,
   updateJson,
 };

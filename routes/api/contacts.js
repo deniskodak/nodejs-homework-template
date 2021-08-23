@@ -1,12 +1,16 @@
 const express = require("express");
-const joiContactSchema = require("../../validation");
 const router = express.Router();
+
+const {
+  joiAddContactSchema,
+  joiChangeContactSchema,
+} = require("../../validation");
 const Contacts = require("../../model");
 
-router.get("/", async (req, res, next) => {
+router.get("/", async (_, res, next) => {
   try {
     const contacts = await Contacts.listContacts();
-    res.status(200).json({ contacts: { contacts } });
+    return res.status(200).json({ contacts: { contacts } });
   } catch (error) {
     next(error);
   }
@@ -27,7 +31,7 @@ router.get("/:contactId", async (req, res, next) => {
 });
 
 router.post("/", async (req, res, next) => {
-  const { error } = joiContactSchema.validate(req.body);
+  const { error } = joiAddContactSchema.validate(req.body);
 
   if (error) {
     return res.status(400).json({ message: "missing fields" });
@@ -35,7 +39,7 @@ router.post("/", async (req, res, next) => {
 
   try {
     const contact = await Contacts.addContact(req.body);
-    res.status(201).json({ contact: { contact } });
+    return res.status(201).json({ contact: { contact } });
   } catch (error) {
     next(error);
   }
@@ -56,7 +60,10 @@ router.delete("/:contactId", async (req, res, next) => {
 });
 
 router.patch("/:contactId", async (req, res, next) => {
-  if (!req.body || Object.keys(req.body).length === 0) {
+  const { error } = joiChangeContactSchema.validate(req.body);
+  const bodyLength = Object.keys(req.body).length;
+
+  if (error || bodyLength === 0) {
     return res.status(400).json({ message: "missing fields" });
   }
 
@@ -70,7 +77,7 @@ router.patch("/:contactId", async (req, res, next) => {
       return res.status(200).json({ contact: { contact } });
     }
 
-    return res.json({ status: "error", code: 404, message: "Not found" });
+    return res.status(404).json({ message: "Not found" });
   } catch (error) {
     next(error);
   }
