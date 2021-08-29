@@ -2,6 +2,9 @@ const express = require("express");
 const logger = require("morgan");
 const cors = require("cors");
 
+const mongoose = require("mongoose");
+require("dotenv").config();
+
 const contactsRouter = require("./routes/api/contacts");
 
 const app = express();
@@ -22,4 +25,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ status: "fail", code: 500, message: err.message });
 });
 
+const { DB_HOST, PORT = 3000 } = process.env;
+
+mongoose
+  .connect(DB_HOST, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    app.listen(PORT);
+  })
+  .catch((error) => console.log(error));
+  
 module.exports = app;
