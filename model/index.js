@@ -1,66 +1,71 @@
-const { v4 } = require("uuid");
-const helpers = require("./helpers");
+const { Contact, joiSchemaAddContact, joiSchemaChangeContact, } = require('./contacts');
 
-const listContacts = async () => {
-  return await helpers.getContacts();
-};
+module.exports = { Contact, joiSchemaAddContact, joiSchemaChangeContact };
 
-const getContactById = async (contactId) => {
-  const contacts = await helpers.getContacts();
-  const searchedIndex = helpers.findIdx(contacts, contactId);
-  if (searchedIndex < 0) {
-    return;
-  }
-  return contacts[searchedIndex];
-};
 
-const removeContact = async (contactId) => {
-  const contacts = await helpers.getContacts();
-  const searchedIndex = helpers.findIdx(contacts, contactId);
+// const { v4 } = require("uuid");
+// const helpers = require("./helpers");
 
-  if (searchedIndex < 0) {
-    return;
-  }
+// const listContacts = async () => {
+//   return await helpers.getContacts();
+// };
 
-  const newContacts = contacts.filter((_, index) => index !== searchedIndex);
-  helpers.updateJson(newContacts);
+// const getContactById = async (contactId) => {
+//   const contacts = await helpers.getContacts();
+//   const searchedIndex = helpers.findIdx(contacts, contactId);
+//   if (searchedIndex < 0) {
+//     return;
+//   }
+//   return contacts[searchedIndex];
+// };
 
-  return contacts[searchedIndex];
-};
+// const removeContact = async (contactId) => {
+//   const contacts = await helpers.getContacts();
+//   const searchedIndex = helpers.findIdx(contacts, contactId);
 
-const addContact = async (body) => {
-  const contacts = await helpers.getContacts();
+//   if (searchedIndex < 0) {
+//     return;
+//   }
 
-  const contact = {
-    id: v4(),
-    ...body,
-    ...(body.phone ? {} : { phone: null }),
-  };
+//   const newContacts = contacts.filter((_, index) => index !== searchedIndex);
+//   helpers.updateJson(newContacts);
 
-  contacts.push(contact);
-  helpers.updateJson(contacts);
+//   return contacts[searchedIndex];
+// };
 
-  return contact;
-};
+// const addContact = async (body) => {
+//   const contacts = await helpers.getContacts();
 
-const updateContact = async (contactId, body) => {
-  const contacts = await helpers.getContacts();
-  const searchedIndex = helpers.findIdx(contacts, contactId);
+//   const contact = {
+//     id: v4(),
+//     ...body,
+//     ...(body.phone ? {} : { phone: null }),
+//   };
 
-  if (searchedIndex < 0) {
-    return;
-  }
+//   contacts.push(contact);
+//   helpers.updateJson(contacts);
 
-  Object.assign(contacts[searchedIndex], body);
-  helpers.updateJson(contacts);
+//   return contact;
+// };
 
-  return contacts[searchedIndex];
-};
+// const updateContact = async (contactId, body) => {
+//   const contacts = await helpers.getContacts();
+//   const searchedIndex = helpers.findIdx(contacts, contactId);
 
-module.exports = {
-  listContacts,
-  getContactById,
-  removeContact,
-  addContact,
-  updateContact,
-};
+//   if (searchedIndex < 0) {
+//     return;
+//   }
+
+//   Object.assign(contacts[searchedIndex], body);
+//   helpers.updateJson(contacts);
+
+//   return contacts[searchedIndex];
+// };
+
+// module.exports = {
+//   listContacts,
+//   getContactById,
+//   removeContact,
+//   addContact,
+//   updateContact,
+// };
