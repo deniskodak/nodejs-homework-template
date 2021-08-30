@@ -35,12 +35,14 @@ const joiSchemaAddContact = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email(emailRegexp).required(),
   phone: Joi.string().pattern(phoneRegexp).required(),
+  favorite: Joi.boolean(),
 });
 
 const joiSchemaChangeContact = Joi.object({
   name: Joi.string(),
   email: Joi.string().email(emailRegexp),
   phone: Joi.string().pattern(phoneRegexp),
+  favorite: Joi.boolean(),
 });
 
 const Contact = model("contact", productSchema);
