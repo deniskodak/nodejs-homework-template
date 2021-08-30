@@ -2,13 +2,14 @@ const { Contact } = require("../../model");
 
 const changeContact = async (req, res, next) => {
   const bodyLength = Object.keys(req.body).length;
+
   try {
     if (bodyLength < 1) {
       return res.status(400).json({ message: "missing field favorite" });
     }
 
     const contact = await Contact.findByIdAndUpdate(
-      { _id: req.params.contactId },
+      req.params.contactId,
       req.body,
       { new: true }
     );
