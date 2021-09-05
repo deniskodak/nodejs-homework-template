@@ -27,8 +27,12 @@ const productSchema = Schema(
       type: Boolean,
       default: false,
     },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
-  { versionKey: false, timesstamps: true }
+  { versionKey: false, timestamps: true }
 );
 
 const joiSchemaAddContact = Joi.object({

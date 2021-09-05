@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const validation = require("../../middlewares");
+const { validation } = require("../../middlewares");
 const { joiSchemaAddContact, joiSchemaChangeContact } = require("../../model");
 
 const {
