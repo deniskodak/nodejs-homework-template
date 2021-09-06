@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { validation } = require("../../middlewares");
+const { validation, asyncWrapper } = require("../../middlewares");
 const { joiSchemaAddContact, joiSchemaChangeContact } = require("../../model");
 
 const {
@@ -14,14 +14,22 @@ const {
 
 router.get("/", getAll);
 
-router.get("/:contactId", getContactById);
+router.get("/:contactId", asyncWrapper(getContactById));
 
-router.post("/", validation(joiSchemaAddContact), addContact);
+router.post("/", validation(joiSchemaAddContact), asyncWrapper(addContact));
 
-router.delete("/:contactId", removeContact);
+router.delete("/:contactId", asyncWrapper(removeContact));
 
-router.patch("/:contactId", validation(joiSchemaChangeContact), changeContact);
+router.patch(
+  "/:contactId",
+  validation(joiSchemaChangeContact),
+  asyncWrapper(changeContact)
+);
 
-router.put("/:contactId", validation(joiSchemaAddContact), changeContact);
+router.put(
+  "/:contactId",
+  validation(joiSchemaAddContact),
+  asyncWrapper(changeContact)
+);
 
 module.exports = router;
