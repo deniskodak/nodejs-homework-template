@@ -4,7 +4,7 @@ const login = require("./login");
 const logout = require("./logout");
 const getCurrentUser = require("./getCurrentUser");
 const changeUser = require("./changeUser");
-const getAvatar = require("./getAvatar");
+const changeAvatar = require("./changeAvatar");
 
 module.exports = {
   registration,
@@ -13,5 +13,5 @@ module.exports = {
   logout,
   getCurrentUser,
   changeUser,
-  getAvatar,
+  changeAvatar,
 };

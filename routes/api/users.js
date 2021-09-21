@@ -15,7 +15,7 @@ const {
   logout,
   getCurrentUser,
   changeUser,
-  getAvatar,
+  changeAvatar,
 } = require("../../controllers/users");
 
 const userPostValidation = validation(joiSchemaAddUser);
@@ -37,7 +37,7 @@ router.patch(
   "/avatar",
   authenticate,
   upload.single("avatar"),
-  asyncWrapper(getAvatar)
+  asyncWrapper(changeAvatar)
 );
 
 module.exports = router;
