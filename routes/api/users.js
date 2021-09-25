@@ -7,16 +7,27 @@ const {
   asyncWrapper,
   upload,
 } = require("../../middlewares");
-const { joiSchemaAddUser, joiSchemaChangeUser } = require("../../model");
+
 const {
-  registration,
+  joiSchemaAddUser,
+  joiSchemaChangeUser,
+  joiSchemaVerifyEmail,
+} = require("../../model");
+
+const {
   removeUser,
-  login,
-  logout,
   getCurrentUser,
   changeUser,
   changeAvatar,
 } = require("../../controllers/users");
+
+const {
+  registration,
+  login,
+  logout,
+  verifyEmailByToken,
+  verifyEmailByPostRequest,
+} = require("../../controllers/auth");
 
 const userPostValidation = validation(joiSchemaAddUser);
 const userPatchValidation = validation(joiSchemaChangeUser);
@@ -38,6 +49,14 @@ router.patch(
   authenticate,
   upload.single("avatar"),
   asyncWrapper(changeAvatar)
+);
+
+router.get("/verify/:verificationToken", asyncWrapper(verifyEmailByToken));
+
+router.post(
+  "/verify/",
+  validation(joiSchemaVerifyEmail),
+  asyncWrapper(verifyEmailByPostRequest)
 );
 
 module.exports = router;

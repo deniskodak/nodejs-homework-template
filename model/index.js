@@ -4,7 +4,12 @@ const {
   joiSchemaChangeContact,
 } = require("./contacts");
 
-const { User, joiSchemaAddUser, joiSchemaChangeUser } = require("./users");
+const {
+  User,
+  joiSchemaAddUser,
+  joiSchemaChangeUser,
+  joiSchemaVerifyEmail,
+} = require("./users");
 
 module.exports = {
   Contact,
@@ -13,4 +18,5 @@ module.exports = {
   User,
   joiSchemaAddUser,
   joiSchemaChangeUser,
+  joiSchemaVerifyEmail,
 };
