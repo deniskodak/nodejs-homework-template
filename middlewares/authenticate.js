@@ -19,6 +19,7 @@ const authenticate = async (req, _, next) => {
       throw new Unauthorized("Not authorized");
     }
 
+    req.id = id;
     req.user = user;
     next();
   } catch (error) {
