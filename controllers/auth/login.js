@@ -14,7 +14,7 @@ const login = async (req, res, _) => {
   }
 
   user.setToken();
-  console.log(user);
+
   user.save();
 
   return res.status(200).json({
