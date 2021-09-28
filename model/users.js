@@ -3,10 +3,7 @@ const gravatar = require("gravatar");
 
 const Joi = require("joi");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
-
-const { SECRET_KEY } = process.env;
 
 const emailRegexp =
   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -43,6 +40,7 @@ const UserSchema = Schema(
     },
     verifyToken: {
       type: String,
+      required: [true, "Verify token is required"],
     },
   },
   { versionKey: false, timestamps: true }
@@ -53,10 +51,6 @@ UserSchema.methods.setPassword = function (password) {
 
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
-};
-
-UserSchema.methods.setToken = function () {
-  this.token = jwt.sign({ id: this._id }, SECRET_KEY);
 };
 
 UserSchema.methods.setVerifyToken = function () {
